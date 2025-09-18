@@ -81,7 +81,7 @@ The nine classes include (but are not limited to):
 1. Download dataset from Kaggle (train/valid images + labels) and separate test set.  
 2. Analyze class distributions; decide whether to merge rare classes or apply class weightings.  
 3. Preprocess images (resize, normalization, augmentations).  
-4. Load Best Models from `models` directory in the repo.
+4. Load Best Models from [Models](https://drive.google.com/drive/folders/1FN3Z2mDSt_CHtEFwxHIlL0YfVJQQFNzr?usp=sharing).
 5. Train (if needed), validate (using mAP@50), tune hyperparameters.  
 6. Test on withheld test set; submit predictions to Kaggle leaderboard.
 
