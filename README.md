@@ -28,6 +28,8 @@ The nine classes include (but are not limited to):
 - Crown (types like metal-ceramic, ceramic, zirconium)  
 - Multiple types of caries (varying by location and severity)
 
+![Classes Preview](assets/image.png)
+
 ---
 
 ## Data Splits & Labeling
@@ -35,6 +37,8 @@ The nine classes include (but are not limited to):
 - Training / validation split is done **by patient** (so images from same patient are not split across train/valid).
 - Test data: Images are from new time period; labels are withheld (used for leaderboard evaluation).
 - Labeling format: Masks / polygons per instance; also text-files with normalized boundary coordinates.
+
+![Classes Distribution](assets/image-1.png)
 
 ---
 
@@ -45,46 +49,47 @@ The nine classes include (but are not limited to):
 
 ---
 
-## Baseline & Results (from Paper)
+## Model Explanation
 
-- Using **YOLOv8 (v8x-Large)** architecture with augmentations.
-- For 9 classes, trained over ~100 epochs.
-- Example mAP@50 on validation: in some classes quite good (e.g. Abrasion, Crown), in others lower (especially rare caries types).  
-- They also ran experiments merging all caries types into a single class to address class imbalance.
+### Our Approach (Segmentation + Hierarical Classification)
 
+- Combining the 6 classes of caries into a signle class called `Caries`.
+- Use `Yolov8x-seg` as the enumeration and segmentation class to detect the 4 main classes (Abrasion, Filling, Crown, Caries)
+- Pass the areas segmented as `Caries` and push it to `ResNet18` model to classify the class into the original 6 classes of caries
+
+![model](assets/model.png)
 ---
 
-## Challenges / Things to Watch Out For
+## Results
 
-- **Class imbalance**: Some classes have far fewer examples (rare caries types) which makes detection harder.
-- **High resolution images** mean that memory/computation might be heavy.  
-- **Generalization**: dataset collected mostly using one camera, similar settings. Models may perform worse on data with different lighting, cameras, etc.
-- **Annotation quality**: As with many medical imaging datasets, domain expertise is required to label accurately; multi-annotator consistency may vary.  
+### Initial Segmentation Results
 
----
+![Segmentation Results](assets/seg-results.png)
 
-## License & Access
+### Classifier Results
 
-- The dataset is published under an **open license**.
-- Code for training, inference, and pre-trained model weights are released.
-- Ethics / consent: Study approved by ethical committee; informed consent was obtained.
+![Classifier Results](assets/classifier.png)
 
----
+### Final Test Results (over the competition)
+
+- We achieved the 2nd best team in the competition -till now- and wainting for more development.
+
+![Rank](assets/rank.png)
 
 ## How to Get Started
 
 1. Download dataset from Kaggle (train/valid images + labels) and separate test set.  
 2. Analyze class distributions; decide whether to merge rare classes or apply class weightings.  
 3. Preprocess images (resize, normalization, augmentations).  
-4. Choose model architecture (e.g. Mask R-CNN, YOLO-v8, etc.) for instance segmentation.  
-5. Train, validate (using mAP@50), tune hyperparameters.  
+4. Load Best Models from `models` directory in the repo.
+5. Train (if needed), validate (using mAP@50), tune hyperparameters.  
 6. Test on withheld test set; submit predictions to Kaggle leaderboard.
 
 ---
 
 ## References
 
-- “AlphaDent: A dataset for automated tooth pathology detection” (Evgeniy I. Sosnin et al., 2025)
-- Kaggle: AlphaDent: Teeth marking – problem statement.
+- “[AlphaDent](https://www.kaggle.com/competitions/alpha-dent): A dataset for automated tooth pathology detection” (Evgeniy I. Sosnin et al., 2025)
+- [Segment Any Tooth](https://www.sciencedirect.com/science/article/pii/S1991790225000030)
 
 ---
