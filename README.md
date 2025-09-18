@@ -72,7 +72,7 @@ The nine classes include (but are not limited to):
 
 ### Final Test Results (over the competition)
 
-- We achieved the 2nd best team in the competition -till now- and wainting for more development.
+- We achieved the 2nd best team in the competition -till now- and waiting for more progress.
 
 ![Rank](assets/rank.png)
 
